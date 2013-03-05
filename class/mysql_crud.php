@@ -7,9 +7,9 @@ class Database{
 	 * Database class
 	 */
 	private $db_host = "localhost";  // Change as required
-	private $db_user = "rstandley_co_uk";  // Change as required
-	private $db_pass = "******";  // Change as required
-	private $db_name = "rstandley_co_uk";	// Change as required
+	private $db_user = "username";  // Change as required
+	private $db_pass = "password";  // Change as required
+	private $db_name = "database";	// Change as required
 	
 	/*
 	 * Extra variables that are required by other function such as boolean con variable
@@ -197,5 +197,10 @@ class Database{
                 return false; // The table does not exist
             }
         }
+    }
+	
+	// Public function to return the data to the user
+    public function getResult(){
+        return $this->result;
     }
 } 
