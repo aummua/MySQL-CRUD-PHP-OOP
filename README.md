@@ -18,3 +18,17 @@ INSERT INTO CRUDClass VALUES('','Name 1','name1@email.com');
 INSERT INTO CRUDClass VALUES('','Name 2','name2@email.com');
 INSERT INTO CRUDClass VALUES('','Name 3','name3@email.com');
 ```
+
+**Select Example**
+
+Use the following code to select * rows from the databse using the class
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->select('CRUDClass');
+$res = $db->getResult();
+print_r($res);
+```
