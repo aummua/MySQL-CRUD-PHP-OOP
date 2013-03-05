@@ -8,7 +8,7 @@ class Database{
 	 */
 	private $db_host = "localhost";  // Change as required
 	private $db_user = "rstandley_co_uk";  // Change as required
-	private $db_pass = "pearroad629";  // Change as required
+	private $db_pass = "******";  // Change as required
 	private $db_name = "rstandley_co_uk";	// Change as required
 	
 	/*
