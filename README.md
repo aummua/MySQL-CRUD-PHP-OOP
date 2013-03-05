@@ -28,7 +28,7 @@ Use the following code to select * rows from the databse using the class
 include('class/mysql_crud.php');
 $db = new Database();
 $db->connect();
-$db->select('CRUDClass');
+$db->select('CRUDClass'); // Enter the table name
 $res = $db->getResult();
 print_r($res);
 ```
