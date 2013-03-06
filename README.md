@@ -32,3 +32,17 @@ $db->select('CRUDClass'); // Enter the table name
 $res = $db->getResult();
 print_r($res);
 ```
+
+**Update Example**
+
+Use the following code to update rows in the database using this class
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->update('CRUDClass',array('name'=>"Name 4",'email'=>"name4@email.com"),'id="1" AND name="Name 1"');
+$res = $db->getResult();
+print_r($res);
+```

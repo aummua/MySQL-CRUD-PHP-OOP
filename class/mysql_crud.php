@@ -88,8 +88,9 @@ class Database{
 						}
 					}
 				}
-				return true; // Qury was successful
+				return true; // Query was successful
 			}else{
+				array_push($this->result,mysql_error());
 				return false; // No rows where returned
 			}
       	}else{
@@ -144,42 +145,23 @@ class Database{
     }
 	
 	// Function to update row in database
-    public function update($table,$rows,$where){
+    public function update($table,$params=array(),$where){
     	// Check to see if table exists
     	if($this->tableExists($table)){
-            // Parse the where values
-            // even values (including 0) contain the where rows
-            // odd values contain the clauses for the row
-            for($i = 0; $i < count($where); $i++){
-                if($i%2 != 0){
-                    if(is_string($where[$i])){
-                        if(($i+1) != null){
-                            $where[$i] = '"'.$where[$i].'" AND ';
-                        }else{
-                            $where[$i] = '"'.$where[$i].'"';
-						}
-                    }
-                }
-            }
-            $where = implode('=',$where);
-            $update = 'UPDATE '.$table.' SET ';
-            $keys = array_keys($rows);
-            for($i = 0; $i < count($rows); $i++){
-                if(is_string($rows[$keys[$i]])){
-                    $update .= $keys[$i].'="'.$rows[$keys[$i]].'"';
-                }else{
-                    $update .= $keys[$i].'='.$rows[$keys[$i]];
-                }
-                // Parse to add commas
-                if($i != count($rows)-1){
-                    $update .= ',';
-                }
-            }
-            $update .= ' WHERE '.$where;
-            $query = @mysql_query($update); // Make query to database
-            if($query){
+    		// Create Array to hold all the columns to update
+            $args=array();
+			foreach($params as $field=>$value){
+				// Seperate each column out with it's corresponding value
+				$args[]=$field.'="'.$value.'"';
+			}
+			// Create the query
+			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
+			// Make query to database
+            if($query = @mysql_query($sql)){
+            	array_push($this->result,"Row has been updated");
             	return true; // Update has been successful
             }else{
+            	array_push($this->result,mysql_error());
                 return false; // Update has not been successful
             }
         }else{
@@ -194,6 +176,7 @@ class Database{
         	if(mysql_num_rows($tablesInDb)==1){
                 return true; // The table exists
             }else{
+            	array_push($this->result,$table." does not exist in this database");
                 return false; // The table does not exist
             }
         }
