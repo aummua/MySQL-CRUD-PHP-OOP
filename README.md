@@ -47,7 +47,7 @@ $res = $db->getResult();
 print_r($res);
 ```
 
-**Insert Example
+**Insert Example**
 
 Use the following code to insert rows into the database using this class
 
