@@ -23,7 +23,7 @@ INSERT INTO CRUDClass VALUES('','Name 3','name3@email.com');
 
 **Select Example**
 
-Use the following code to select * rows from the databse using the class
+Use the following code to select * rows from the databse using this class
 
 ```php
 <?php
@@ -31,6 +31,18 @@ include('class/mysql_crud.php');
 $db = new Database();
 $db->connect();
 $db->select('CRUDClass'); // Table name
+$res = $db->getResult();
+print_r($res);
+```
+
+Use the following code to specify what is selected from the database using this class
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->select('CRUDClass','id,name','name="Name 1"','id DESC'); // Table name, Column Names, WHERE conditions, ORDER BY conditions
 $res = $db->getResult();
 print_r($res);
 ```
