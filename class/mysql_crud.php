@@ -24,12 +24,14 @@ class Database{
             if($myconn){
             	$seldb = @mysql_select_db($this->db_name,$myconn); // Credentials have been pass through mysql_connect() now select the database
                 if($seldb){
-                	$this->con = true;  
+                	$this->con = true;
                     return true;  // Connection has been made return TRUE
-                }else{  
+                }else{
+                	array_push($this->result,mysql_error()); 
                     return false;  // Problem selecting database return FALSE
                 }  
-            }else{  
+            }else{
+            	array_push($this->result,mysql_error());
                 return false; // Problem connecting return FALSE
             }  
         }else{  

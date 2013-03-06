@@ -3,6 +3,16 @@ A simple PHP Class for using with MySQL create, read, update and delete function
 **Using The Class**
 --
 
+**Database Credentials**
+
+You will need to change some variable values in the Class, that represent those of your own database. Change the following -
+
+```php
+private $db_host = "localhost";  // Change as required
+private $db_user = "username";  // Change as required
+private $db_pass = "password";  // Change as required
+private $db_name = "database";	// Change as required
+```
 
 **Test MySQL**
 
