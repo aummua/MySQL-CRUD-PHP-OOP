@@ -60,3 +60,17 @@ $db->insert('CRUDClass',array('name'=>'Name 5','email'=>'name5@email.com'));  //
 $res = $db->getResult();  
 print_r($res);
 ```
+
+**Delete Example**
+
+Use the following code to delete rows from the database with this class
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->delete('CRUDClass','id=5');  // Table name, WHERE conditions
+$res = $db->getResult();  
+print_r($res);
+```

@@ -126,11 +126,13 @@ class Database{
             }else{
                 $delete = 'DELETE FROM '.$table.' WHERE '.$where; // Create query to delete rows
             }
-            $del = @mysql_query($delete); // Submit query to database
-            if($del){
+            // Submit query to database
+            if($del = @mysql_query($delete)){
+            	array_push($this->result,mysql_affected_rows());
                 return true; // The query exectued correctly
             }else{
-               return false; // The query did not execute correctly
+            	array_push($this->result,mysql_error());
+               	return false; // The query did not execute correctly
             }
         }else{
             return false; // The table does not exist
