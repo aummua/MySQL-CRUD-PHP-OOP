@@ -99,27 +99,20 @@ class Database{
     }
 	
 	// Function to insert into the database
-    public function insert($table,$values,$rows = null){
+    public function insert($table,$params=array()){
     	// Check to see if the table exists
     	 if($this->tableExists($table)){
-    	 	// The table does exist, carry on with the query creation
-            $insert = 'INSERT INTO '.$table;
-            if($rows != null){
-                $insert .= ' ('.$rows.')';
-            }
-			// Loop through each value and add them to the query
-            for($i = 0; $i < count($values); $i++){
-                if(is_string($values[$i]))
-                    $values[$i] = '"'.$values[$i].'"';
-            }
-            $values = implode(',',$values);
-            $insert .= ' VALUES ('.$values.')';
-            $ins = @mysql_query($insert); // Make the query to insert to the database
-            if($ins){
+    	 	$sql='INSERT INTO '.$table.' ('.implode(',',array_keys($params)).') VALUES ("' . implode('", "', $params) . '")';
+            // Make the query to insert to the database
+            if($ins = @mysql_query($sql)){
+            	array_push($this->result,mysql_insert_id());
                 return true; // The data has been inserted
             }else{
+            	array_push($this->result,mysql_error());
                 return false; // The data has not been inserted
             }
+        }else{
+        	return false; // Table does not exist
         }
     }
 	
@@ -158,7 +151,7 @@ class Database{
 			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
 			// Make query to database
             if($query = @mysql_query($sql)){
-            	array_push($this->result,"Row has been updated");
+            	array_push($this->result,mysql_affected_rows());
             	return true; // Update has been successful
             }else{
             	array_push($this->result,mysql_error());
