@@ -57,6 +57,35 @@ $res = $db->getResult();
 print_r($res);
 ```
 
+**Join Example**
+
+Start by creating another table in your database -
+
+```mysql
+CREATE TABLE IF NOT EXISTS CRUDClassChild (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  parentId int(11) NOT NULL,
+  name varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO CRUDClassChild VALUES('','1','Child 1');
+INSERT INTO CRUDClassChild VALUES('','1','Child 2');
+INSERT INTO CRUDClassChild VALUES('','2','Child 1');
+```
+
+Use the following code to select rows using a join in the database using this class
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->select('CRUDClass','CRUDClass.id,CRUDClass.name,CRUDClassChild.name','CRUDClassChild ON CRUDClass.id = parentId','CRUDClass.name="Name 1"','id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+$res = $db->getResult();
+print_r($res);
+```
+
 **Update Example**
 
 Use the following code to update rows in the database using this class
