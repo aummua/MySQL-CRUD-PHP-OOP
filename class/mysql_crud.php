@@ -62,9 +62,12 @@ class Database{
     }
 	
 	// Function to SELECT from the database
-    public function select($table, $rows = '*', $where = null, $order = null){
+    public function select($table, $rows = '*', $join = null, $where = null, $order = null){
     	// Create query from the variables passed to the function
     	$q = 'SELECT '.$rows.' FROM '.$table;
+		if($join != null){
+			$q .= ' JOIN '.$join;
+		}
 		if($where != null){
         	$q .= ' WHERE '.$where;
 		}
