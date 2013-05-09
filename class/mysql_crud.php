@@ -189,6 +189,8 @@ class Database{
 	
 	// Public function to return the data to the user
     public function getResult(){
-        return $this->result;
+        $val = $this->result;
+        $this->result = array();
+        return $val;
     }
 } 
