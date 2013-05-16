@@ -61,6 +61,35 @@ class Database{
 		}
     }
 	
+	public function sql($sql){
+		$query = @mysql_query($sql);
+		if($query){
+			// If the query returns >= 1 assign the number of rows to numResults
+			$this->numResults = mysql_num_rows($query);
+			// Loop through the query results by the number of rows returned
+			for($i = 0; $i < $this->numResults; $i++){
+				$r = mysql_fetch_array($query);
+               	$key = array_keys($r);
+               	for($x = 0; $x < count($key); $x++){
+               		// Sanitizes keys so only alphavalues are allowed
+                   	if(!is_int($key[$x])){
+                   		if(mysql_num_rows($query) > 1){
+                   			$this->result[$i][$key[$x]] = $r[$key[$x]];
+						}else if(mysql_num_rows($query) < 1){
+							$this->result = null;
+						}else{
+							$this->result[$key[$x]] = $r[$key[$x]];
+						}
+					}
+				}
+			}
+			return true; // Query was successful
+		}else{
+			array_push($this->result,mysql_error());
+			return false; // No rows where returned
+		}
+	}
+	
 	// Function to SELECT from the database
     public function select($table, $rows = '*', $join = null, $where = null, $order = null){
     	// Create query from the variables passed to the function

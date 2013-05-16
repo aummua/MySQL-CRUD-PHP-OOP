@@ -128,6 +128,22 @@ $res = $db->getResult();
 print_r($res);
 ```
 
+**Full SQL Example**
+
+Use the following code to enter the full SQL query
+
+```php
+<?php
+include('class/mysql_crud.php');
+$db = new Database();
+$db->connect();
+$db->sql('SELECT id,name FROM CRUDClass');
+$res = $db->getResult();
+foreach($res as $output){
+	echo $output["name"]."<br />";
+}
+```
+
 **jQuery and AJAX Example**
 
 Use the following code to select names from the database with this class using jQuery and AJAX
