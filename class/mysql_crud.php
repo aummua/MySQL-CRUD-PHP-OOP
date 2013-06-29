@@ -20,6 +20,7 @@ class Database{
 	 * Extra variables that are required by other function such as boolean con variable
 	 */
 	private $con = false; // Check to see if the connection is active
+	private $charset = "UTF8"; // Charset Default: "UTF8"
 	private $result = array(); // Any results from a query will be stored here
 	
 	// Function to make connection to database
@@ -27,6 +28,7 @@ class Database{
 		if(!$this->con){
 			$myconn = @mysql_connect($this->db_host,$this->db_user,$this->db_pass);  // mysql_connect() with variables defined at the start of Database class
             if($myconn){
+            	mysql_query('SET NAMES '.$this->charset, $myconn); // Set Charset
             	$seldb = @mysql_select_db($this->db_name,$myconn); // Credentials have been pass through mysql_connect() now select the database
                 if($seldb){
                 	$this->con = true;
