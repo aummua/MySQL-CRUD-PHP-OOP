@@ -93,7 +93,7 @@ class Database{
 	// Function to SELECT from the database
     public function select($table, $rows = '*', $join = null, $where = null, $order = null){
     	// Create query from the variables passed to the function
-    	$q = 'SELECT '.$rows.' FROM '.$table;
+    	$q = 'SELECT '.$rows.' FROM `'.$table.'`';
 		if($join != null){
 			$q .= ' JOIN '.$join;
 		}
@@ -141,7 +141,7 @@ class Database{
     public function insert($table,$params=array()){
     	// Check to see if the table exists
     	 if($this->tableExists($table)){
-    	 	$sql='INSERT INTO '.$table.' ('.implode(',',array_keys($params)).') VALUES ("' . implode('", "', $params) . '")';
+    	 	$sql='INSERT INTO `'.$table.'` ('.implode(',',array_keys($params)).') VALUES ("' . implode('", "', $params) . '")';
             // Make the query to insert to the database
             if($ins = @mysql_query($sql)){
             	array_push($this->result,mysql_insert_id());
@@ -161,9 +161,9 @@ class Database{
     	 if($this->tableExists($table)){
     	 	// The table exists check to see if we are deleting rows or table
     	 	if($where == null){
-                $delete = 'DELETE '.$table; // Create query to delete table
+                $delete = 'DELETE `'.$table.'`'; // Create query to delete table
             }else{
-                $delete = 'DELETE FROM '.$table.' WHERE '.$where; // Create query to delete rows
+                $delete = 'DELETE FROM `'.$table.'` WHERE '.$where; // Create query to delete rows
             }
             // Submit query to database
             if($del = @mysql_query($delete)){
@@ -189,7 +189,7 @@ class Database{
 				$args[]=$field.'="'.$value.'"';
 			}
 			// Create the query
-			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
+			$sql='UPDATE `'.$table.'` SET '.implode(',',$args).' WHERE '.$where;
 			// Make query to database
             if($query = @mysql_query($sql)){
             	array_push($this->result,mysql_affected_rows());
